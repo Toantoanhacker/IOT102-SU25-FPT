@@ -75,7 +75,6 @@ Có 2 module: module định vị và module điều khiển <br/>
 <img src="img/wiring.png" alt="wiring img" width="100%"/>
 </body>
 
-
 ## Chức năng ngoài:
 - Kết nối với app trên điện thoại thông qua OTG USB
 - Chức năng : hình ảnh trực qua gps trên map
