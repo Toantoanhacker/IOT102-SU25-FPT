@@ -38,33 +38,33 @@ Làm tăng rủi ro cho nhân dân ở các vùng đồi núi nguy hiểm.
 
 ## Triển khai nghiên cứu
 Yêu cầu hệ thống
-Có 2 module: module định vị và module điều khiển
-        - Module định vị:
-               + Thành phần chính
-                      - có thể định vị được GPS để biêt vị trí                                           > NEO 6M GPS ✅
-                      - hiển thị được thông tin lên màn hình                                         > 0.96 oled 128x32 I2C (màn hình hiển thị) ✅
-                      - có thể thu và nhận tín hiệu radio trong bán kính 1-2km       >  NRF24L01  ✅                               
-                      - phát hiện té ngã                                                                                 > MPU-6050 ✅
-                      - phát cảnh báo bằng âm thanh đủ lớn                                         > high db buzzer
-                                                                                                                                         > ESP8266 ✅
-               + Thành phần phụ
-                      - có đèn chiếu sáng
-                      - pin chạy được khoảng 7-8 tiếng
-                      - có thể dùng năng lượng mặt trời để sạc
-                      - la bàn (không bắt buộc)
-                      - có thể hỗ trợ cảm biến khí ga dành cho thợ mỏ (có thể thêm vào module định vị)
-         - Module điều khiển
-                      - LCD để hiện khoảng cách hoặc tọa độ                                        > 16x2LCD
-                      - thiết bị thu phat radio                                                                     > SX1278 thay bằng NRF24L01 
+Có 2 module: module định vị và module điều khiển <br/>
+        - Module định vị:<br/>
+               + Thành phần chính<br/>
+                      - có thể định vị được GPS để biêt vị trí                                           > NEO 6M GPS ✅<br/>
+                      - hiển thị được thông tin lên màn hình                                         > 0.96 oled 128x32 I2C (màn hình hiển thị) ✅<br/>
+                      - có thể thu và nhận tín hiệu radio trong bán kính 1-2km       >  NRF24L01  ✅                               <br/>
+                      - phát hiện té ngã                                                                                 > MPU-6050 ✅<br/>
+                      - phát cảnh báo bằng âm thanh đủ lớn                                         > high db buzzer<br/>
+                                                                                                                                         > ESP8266 ✅<br/>
+               + Thành phần phụ<br/>
+                      - có đèn chiếu sáng<br/>
+                      - pin chạy được khoảng 7-8 tiếng<br/>
+                      - có thể dùng năng lượng mặt trời để sạc<br/>
+                      - la bàn (không bắt buộc)<br/>
+                      - có thể hỗ trợ cảm biến khí ga dành cho thợ mỏ (có thể thêm vào module định vị)<br/>
+         - Module điều khiển<br/>
+                      - LCD để hiện khoảng cách hoặc tọa độ                                        > 16x2LCD<br/>
+                      - thiết bị thu phat radio                                                                     > SX1278 thay bằng NRF24L01 <br/>
 
-
+<br/>
 ## Video tham khảo:
--[ESP8266 Blynk GPS Tracker With Real Time Display](https://www.youtube.com/watch?v=UzTMUVmO7dM&t=326s)
--[LoRa GPS Tracker Project with Google Maps - Arduino ESP8266 RYLR406](https://www.youtube.com/watch?v=XNE0Qm0NdLg)
--[Track Your Dog Using Arduino | GPS + LoRa + Android](https://www.youtube.com/watch?v=u0pzo9lmS90)
--[Arduino ESP32 GPS Data Visualization | Serial Communication and Android App](https://www.youtube.com/watch?v=jKTF34ZZt1I)
--[How to Load HTML CSS Javascript Website Inside Unity3D for Free | Unity Android Tutorial](https://www.youtube.com/watch?v=pQbiWWvL8Co&t=56s)
--[base code mẫu để tham khảo](https://github.com/ahmadlogs/LoRaGpsTracker)
+- [ESP8266 Blynk GPS Tracker With Real Time Display](https://www.youtube.com/watch?v=UzTMUVmO7dM&t=326s)
+- [LoRa GPS Tracker Project with Google Maps - Arduino ESP8266 RYLR406](https://www.youtube.com/watch?v=XNE0Qm0NdLg)
+- [Track Your Dog Using Arduino | GPS + LoRa + Android](https://www.youtube.com/watch?v=u0pzo9lmS90)
+- [Arduino ESP32 GPS Data Visualization | Serial Communication and Android App](https://www.youtube.com/watch?v=jKTF34ZZt1I)
+- [How to Load HTML CSS Javascript Website Inside Unity3D for Free | Unity Android Tutorial](https://www.youtube.com/watch?v=pQbiWWvL8Co&t=56s)
+- [base code mẫu để tham khảo](https://github.com/ahmadlogs/LoRaGpsTracker)
 
 ## Brain dump
 [Canva whiteboard ideas dump link](https://www.canva.com/design/DAGqHmEINVc/SHOX6dJeYkdIJgKQLLeZ7g/edit?utm_content=DAGqHmEINVc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
