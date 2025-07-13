@@ -123,7 +123,8 @@ void loop() {
 
 <img src="img/mobile-debug.png" alt="serial debug app" width="100%"/>
 - Định dạng serial đầu ra đúng:
-```txt
+
+```
 ---
 
 23:31:24.586 USB device detected
