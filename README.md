@@ -1,7 +1,7 @@
 <div align="center">
   <img src="favicons/logo.png" alt="iot Icon" width="100"/>
 
-# Final Project IOT102_SU25_FPT - Hệ thống định vị hỗ trợ tìm kiếm cứu nạn khẩn cấp
+# Final Project Nhóm 3 IOT102_SE1957_SUM25 - Hệ thống định vị hỗ trợ tìm kiếm cứu nạn khẩn cấp
 </div>
 
 <body>
@@ -72,6 +72,6 @@ Có 2 module: module định vị và module điều khiển <br/>
 [Canva whiteboard ideas dump link](https://www.canva.com/design/DAGqHmEINVc/SHOX6dJeYkdIJgKQLLeZ7g/edit?utm_content=DAGqHmEINVc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ## Sơ đồ Wiring cho 2 module
-<img src="wiring.png" alt="iot Icon" width="100"/>
+<img src="wiring.png" alt="iot Icon" width="100%"/>
 </body>
 
