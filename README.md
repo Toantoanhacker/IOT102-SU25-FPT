@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="favicons/logo.png" alt="iot Icon" width="100"/>
+  <img src="img/logo.png" alt="iot Icon"/>
 
-# Final Project IOT102_SU25_FPT - Hệ thống định vị hỗ trợ tìm kiếm cứu nạn khẩn cấp
+# Final Project Nhóm 3 IOT102_SE1957_SUM25 - Hệ thống định vị hỗ trợ tìm kiếm cứu nạn khẩn cấp
 </div>
 
 <body>
@@ -72,6 +72,54 @@ Có 2 module: module định vị và module điều khiển <br/>
 [Canva whiteboard ideas dump link](https://www.canva.com/design/DAGqHmEINVc/SHOX6dJeYkdIJgKQLLeZ7g/edit?utm_content=DAGqHmEINVc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ## Sơ đồ Wiring cho 2 module
-<img src="wiring.png" alt="iot Icon" width="100"/>
+<img src="img/wiring.png" alt="wiring img" width="100%"/>
 </body>
 
+
+## Chức năng ngoài:
+- Kết nối với app trên điện thoại thông qua OTG USB
+- Chức năng : hình ảnh trực qua gps trên map
+- Giao thức: Đọc tín hiệu serial gửi từ arduino qua OTG USB
+<img src="img/app.png" alt="mobile gps map" width="100%"/>
+
+- Logic giao tiếp qua serial:
+
+```cpp
+---
+// The script is written by Slavko Zdravevski
+// If you want to support my work, you can subscribe to my youtube channel: https://bit.ly/3FG9hpK
+// I do a lot of interesting things in my free time, so you might find something of your interest or we can exchange ideas and knowledge
+
+//The script works in combination with my android app. If you are using a GPS module with your microcontroller, you might wanna visualize the data that the module returns
+//If that's the case you can use my app, and change the serial commands with the data that your module will give you
+void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+  //I just wrote a random map point, just to show you how it works, change the code and send your coordinates to the phone
+  Serial.write("41.037806805413965,21.34574775323119|"); //My app expects: "latitude,longitude|" do not forget the "|" after the coordinates
+  Serial.flush();
+  delay(5000);
+  Serial.write("41.03511284027609,21.339848139262262|");
+  Serial.flush();
+  delay(5000);
+  Serial.write("41.032318982233626,21.335615232425358|");
+  Serial.flush();
+  delay(5000);
+  Serial.write("41.03178015306117,21.330191820376996|");
+  Serial.flush();
+  delay(5000);
+  Serial.write("41.03215932956679,21.322149297386886|");
+  Serial.flush();
+  delay(5000);
+  Serial.write("41.03285780691883,21.316170316308956|");
+  Serial.flush();
+  delay(5000);
+}
+---
+```
+
+### App dùng để debug OTG USB
+
+<img src="img/mobile-debug.png" alt="serial debug app" width="100%"/>
