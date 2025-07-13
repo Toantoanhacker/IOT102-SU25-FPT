@@ -58,7 +58,9 @@ Có 2 module: module định vị và module điều khiển <br/>
                       - thiết bị thu phat radio                                                                     > SX1278 thay bằng NRF24L01 <br/>
 
 <br/>
+
 ## Video tham khảo:
+<br/>
 [ESP8266 Blynk GPS Tracker With Real Time Display](https://www.youtube.com/watch?v=UzTMUVmO7dM&t=326s)<br/>
 [LoRa GPS Tracker Project with Google Maps - Arduino ESP8266 RYLR406](https://www.youtube.com/watch?v=XNE0Qm0NdLg)<br/>
 [Track Your Dog Using Arduino | GPS + LoRa + Android](https://www.youtube.com/watch?v=u0pzo9lmS90)<br/>
