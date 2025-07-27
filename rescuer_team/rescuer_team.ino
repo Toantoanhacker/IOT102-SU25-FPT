@@ -130,7 +130,7 @@ void updateOledDisplay() {
     display.println("Victim GPS: No Fix");
   }
   display.print("SOS: "); display.print(victimDataPacket.isSosSignal ? "ON " : "OFF");
-  display.print("/Fall: "); display.println(victimDataPacket.isFallDetected ? "Y" : "N");
+  display.print(" / Fall: "); display.println(victimDataPacket.isFallDetected ? "Yes" : "No");
   display.setCursor(0, 24);
   display.print("Beacon CMD Sent: ");
   display.print(remoteBeaconState ? "ON" : "OFF");
