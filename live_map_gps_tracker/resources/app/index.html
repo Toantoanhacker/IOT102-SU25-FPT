@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>G3 IoT102 SU25 - Bản đồ định vị hỗ trợ tìm kiếm cứu nạn</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://unpkg.com;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <style>
+        html, body { height: 100%; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        #map { width: 100%; height: 100%; }
+        .status-overlay { 
+            position: absolute; 
+            bottom: 20px; 
+            left: 20px; 
+            z-index: 1000; 
+            background: rgba(255, 255, 255, 0.9); 
+            padding: 10px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-left: 5px solid #cccccc; /* Default border color */
+            transition: border-color 0.5s;
+            max-width: 350px;
+        }
+        .connection-controls { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            z-index: 1000; 
+            background: rgba(255, 255, 255, 0.9); 
+            padding: 10px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .tile-overlay { 
+            position: absolute; 
+            bottom: 10px; 
+            right: 10px; 
+            z-index: 1000; 
+            background: rgba(255, 255, 255, 0.5); 
+            padding: 10px; 
+            border-radius: 5px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-right: 5px solid #59cdff; /* Default border color */
+            transition: border-color 0.5s;
+        }
+        select, button { font-size: 14px; padding: 5px; }
+        .status-overlay p { margin: 4px 0; }
+        .status-title { font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 4px;}
+        .status-value { font-family: monospace; }
+        .status-alert { color: #d62d20; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="connection-controls">
+        <label for="port-select"><b>COM Port:</b></label>
+        <select id="port-select"></select>
+        <button id="connect-btn">Connect</button>
+    </div>
+    <div class="tile-overlay">
+        <p class="status-title">Bản đồ định vị hỗ trợ tìm kiếm cứu nạn</p>
+        <p>Hệ thống định vị hỗ trợ tìm kiếm cứu nạn khẩn cấp<br/><span>Nhóm 3 - FPT IoT102 SE1957 SU25</span></p>
+        <p></p>
+        <p><b style="color: green">Rescuer's Tracker</b></p>
+    </div>
+    <div id="status" class="status-overlay">
+        <p class="status-title">Tracker Status</p>
+        <p><b>LIVE GPS:</b> <span id="gps-coords" class="status-value">Waiting for connection...</span></p>
+        <p><b>SOS Signal:</b> <span id="sos-status" class="status-value">--</span></p>
+        <p><b>Fall Detected:</b> <span id="fall-status" class="status-value">--</span></p>
+        <p><b>Beacon Command:</b> <span id="beacon-cmd-status" class="status-value">--</span></p>
+        <p><b>Connection:</b> <span id="conn-status" class="status-value">Disconnected</span></p>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        const _0x39df6c=_0x2572;function _0x2572(_0x195461,_0x124682){const _0x44b2e3=_0x44b2();return _0x2572=function(_0x2572da,_0x17e0fc){_0x2572da=_0x2572da-0x1c9;let _0x109b9f=_0x44b2e3[_0x2572da];return _0x109b9f;},_0x2572(_0x195461,_0x124682);}(function(_0x486b9c,_0x26fb95){const _0x5991e1=_0x2572,_0x3645f2=_0x486b9c();while(!![]){try{const _0x35b781=-parseInt(_0x5991e1(0x1e7))/0x1*(-parseInt(_0x5991e1(0x1c9))/0x2)+-parseInt(_0x5991e1(0x1f7))/0x3*(-parseInt(_0x5991e1(0x1fb))/0x4)+-parseInt(_0x5991e1(0x205))/0x5*(parseInt(_0x5991e1(0x1d4))/0x6)+-parseInt(_0x5991e1(0x1d5))/0x7*(-parseInt(_0x5991e1(0x1ec))/0x8)+-parseInt(_0x5991e1(0x1ea))/0x9+parseInt(_0x5991e1(0x1e2))/0xa*(parseInt(_0x5991e1(0x1ee))/0xb)+-parseInt(_0x5991e1(0x200))/0xc*(-parseInt(_0x5991e1(0x1e5))/0xd);if(_0x35b781===_0x26fb95)break;else _0x3645f2['push'](_0x3645f2['shift']());}catch(_0x556df9){_0x3645f2['push'](_0x3645f2['shift']());}}}(_0x44b2,0x26f5e));const statusBox=document[_0x39df6c(0x1e9)](_0x39df6c(0x1ed)),gpsCoordsSpan=document['getElementById'](_0x39df6c(0x1f5)),sosStatusSpan=document[_0x39df6c(0x1e9)](_0x39df6c(0x206)),fallStatusSpan=document[_0x39df6c(0x1e9)]('fall-status'),beaconCmdSpan=document[_0x39df6c(0x1e9)](_0x39df6c(0x1e0)),connStatusSpan=document[_0x39df6c(0x1e9)](_0x39df6c(0x1d0)),portSelect=document[_0x39df6c(0x1e9)](_0x39df6c(0x203)),connectBtn=document['getElementById'](_0x39df6c(0x1d1)),map=L[_0x39df6c(0x1cc)](_0x39df6c(0x1cc))[_0x39df6c(0x1f4)]([21.028,105.854],0xd);function _0x44b2(){const _0xf3e6=['65057wRmzpX','addTo','getElementById','2819439TjJdas','color','112MsmAWl','status','11TybDhU','option','forEach','...','Connecting\x20to\x20','#000000','setView','gps-coords','substring','65958RFncbD','onPortList','#4caf50','value','12KIZLfe','appendChild','startsWith','electronAPI','innerHTML','34596xXvCMl','#d62d20','manufacturer','port-select','GPS_DATA:','5IKqyLb','sos-status','OFF\x20(Command\x20Sent)','className','#ff9800','8LnVnob','ERROR','ON\x20(Command\x20Sent)','map','BEACON_CMD:','length','COM3','conn-status','connect-btn','status-value','setLatLng','453282dthqyS','43869LRYJmV','textContent','tileLayer','map-tile:///{z}/{x}/{y}.png','onSerialError','path','style','YES','LatLng','status-value\x20status-alert','marker','beacon-cmd-status','<option>No\x20ports\x20found</option>','1142950RUYUqO','toFixed','toString','91vZUEhX','#2e7d32'];_0x44b2=function(){return _0xf3e6;};return _0x44b2();}L[_0x39df6c(0x1d7)](_0x39df6c(0x1d8),{'attribution':'Map\x20data\x20©\x20OpenStreetMap','minZoom':0x8,'maxZoom':0x12,'minNativeZoom':0xc,'maxNativeZoom':0x10})['addTo'](map);const marker=L[_0x39df6c(0x1df)]([0x0,0x0])[_0x39df6c(0x1e8)](map),path=L['polyline']([],{'color':'red','weight':0x3})[_0x39df6c(0x1e8)](map);let isFirstPoint=!![];window[_0x39df6c(0x1fe)][_0x39df6c(0x1f8)](_0x282007=>{const _0x380f72=_0x39df6c;portSelect['innerHTML']='',_0x282007[_0x380f72(0x1ce)]===0x0?(portSelect[_0x380f72(0x1ff)]=_0x380f72(0x1e1),connectBtn['disabled']=!![]):(_0x282007[_0x380f72(0x1f0)](_0x1d6ed3=>{const _0x428c3f=_0x380f72,_0x1c16e6=document['createElement'](_0x428c3f(0x1ef));_0x1c16e6[_0x428c3f(0x1fa)]=_0x1d6ed3[_0x428c3f(0x1da)],_0x1c16e6[_0x428c3f(0x1d6)]=_0x1d6ed3['path']+'\x20'+(_0x1d6ed3['manufacturer']?'('+_0x1d6ed3[_0x428c3f(0x202)]+')':''),portSelect[_0x428c3f(0x1fc)](_0x1c16e6);}),_0x282007['some'](_0x842a9d=>_0x842a9d[_0x380f72(0x1da)]===_0x380f72(0x1cf))&&(portSelect['value']=_0x380f72(0x1cf)),connectBtn['disabled']=![]);}),connectBtn['addEventListener']('click',()=>{const _0xc6d218=_0x39df6c,_0x32879d=portSelect[_0xc6d218(0x1fa)];_0x32879d&&(connStatusSpan[_0xc6d218(0x1d6)]=_0xc6d218(0x1f2)+_0x32879d+_0xc6d218(0x1f1),connStatusSpan['style'][_0xc6d218(0x1eb)]='#ff9800',window[_0xc6d218(0x1fe)]['connectToPort'](_0x32879d));}),window[_0x39df6c(0x1fe)]['onGpsData'](_0x560b51=>{const _0x90f271=_0x39df6c,_0x12adde=_0x560b51[_0x90f271(0x1e4)]();connStatusSpan[_0x90f271(0x1d6)]='Receiving\x20Data',connStatusSpan['style'][_0x90f271(0x1eb)]=_0x90f271(0x1e6);if(_0x12adde[_0x90f271(0x1fd)](_0x90f271(0x204))){const _0x2b0cea=_0x12adde['substring'](0x9),_0x1b2a61=_0x2b0cea['split'](',');if(_0x1b2a61[_0x90f271(0x1ce)]>=0x4){const _0x5723b3=parseFloat(_0x1b2a61[0x0]),_0x53fc10=parseFloat(_0x1b2a61[0x1]),_0x5ba7f9=_0x1b2a61[0x2]==='1',_0x38c5c2=_0x1b2a61[0x3]==='1';if(!isNaN(_0x5723b3)&&!isNaN(_0x53fc10)){gpsCoordsSpan[_0x90f271(0x1d6)]=_0x5723b3['toFixed'](0x6)+',\x20'+_0x53fc10[_0x90f271(0x1e3)](0x6);const _0x576b95=new L[(_0x90f271(0x1dd))](_0x5723b3,_0x53fc10);marker[_0x90f271(0x1d3)](_0x576b95),path['addLatLng'](_0x576b95),isFirstPoint&&(map[_0x90f271(0x1f4)](_0x576b95,0x11),isFirstPoint=![]);}sosStatusSpan[_0x90f271(0x1d6)]=_0x5ba7f9?'ON':'OFF',sosStatusSpan[_0x90f271(0x208)]=_0x5ba7f9?_0x90f271(0x1de):_0x90f271(0x1d2),fallStatusSpan[_0x90f271(0x1d6)]=_0x38c5c2?_0x90f271(0x1dc):'NO',fallStatusSpan[_0x90f271(0x208)]=_0x38c5c2?_0x90f271(0x1de):_0x90f271(0x1d2),statusBox[_0x90f271(0x1db)]['borderColor']=_0x5ba7f9||_0x38c5c2?_0x90f271(0x201):_0x90f271(0x1f9);}}else{if(_0x12adde[_0x90f271(0x1fd)](_0x90f271(0x1cd))){const _0x4d43bd=_0x12adde[_0x90f271(0x1f6)](0xb),_0x48e4c6=_0x4d43bd==='1';beaconCmdSpan[_0x90f271(0x1d6)]=_0x48e4c6?_0x90f271(0x1cb):_0x90f271(0x207),beaconCmdSpan[_0x90f271(0x1db)][_0x90f271(0x1eb)]=_0x48e4c6?_0x90f271(0x209):_0x90f271(0x1f3);}}}),window[_0x39df6c(0x1fe)][_0x39df6c(0x1d9)](_0x5f3d13=>{const _0x31c842=_0x39df6c;connStatusSpan[_0x31c842(0x1d6)]=_0x31c842(0x1ca),connStatusSpan[_0x31c842(0x1db)][_0x31c842(0x1eb)]=_0x31c842(0x201),gpsCoordsSpan[_0x31c842(0x1d6)]=_0x5f3d13;});
+    </script>
+</body>
+</html>
