@@ -250,9 +250,7 @@ style='font-size:13.0pt;font-family:"Times New Roman",serif;'>S&#417;
 &#273;&#7891; kh&#7889;i</span></b></p>
 
 <p class=MsoNormal style='text-indent:11.35pt;line-height:150%'><i><span
-lang=vi style='font-size:13.0pt;line-height:150%;font-family:"Times New Roman",serif'><img
-border=0 width=602 height=331 id="Picture 10"
-src="IOT102-SU25-FPT_files/image002.gif"></span></i></p>
+lang=vi style='font-size:13.0pt;line-height:150%;font-family:"Times New Roman",serif'><img src="img/Screenshot 2025-07-26 002724.png" alt="sơ đồ khối" width="100%"/></span></i></p>
 
 <h3 style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:.5in;
 text-indent:-.25in;line-height:150%'><b><span lang=vi style='font-size:13.0pt;
@@ -722,12 +720,8 @@ void loop() {
 ```
 
 
-<p class=MsoNormal style='line-height:150%'><span lang=vi style='font-size:
-13.0pt;line-height:150%;font-family:"Times New Roman",serif'>&nbsp;</span></p>
-<h3 style='margin:0in;text-indent:11.35pt;line-height:150%'><b><span
-style='font-size:13.0pt;line-height:150%;font-family:"Times New Roman",serif;
-'></span></b><b><span lang=vi style='font-size:13.0pt;line-height:
-150%;font-family:"Times New Roman",serif;'>Thực hiện chinh thức</span></b></h3>
+## Thực hiện chính thức
+
 <h3 style='margin:0in;text-indent:11.35pt;line-height:150%'><b><span
 style='font-size:13.0pt;line-height:150%;font-family:"Times New Roman",serif;
 '>4</span></b><b><span lang=vi style='font-size:13.0pt;line-height:
@@ -745,31 +739,62 @@ font-family:"Times New Roman",serif'>Thi&#7871;t b&#7883; c&#7911;a n&#7841;n
 nhân                                                    Thi&#7871;t b&#7883;
 c&#7911;a &#273;&#7897;i c&#7913;u h&#7897;</span></i></p>
 
-<p class=MsoNormal align=center style='text-align:center;text-indent:11.35pt;
-line-height:150%'><span lang=vi style='font-size:13.0pt;line-height:150%;
-font-family:"Times New Roman",serif'>&nbsp;</span></p>
-
-<p class=MsoNormal align=center style='text-align:center;text-indent:11.35pt;
-line-height:150%'><span lang=vi style='font-size:13.0pt;line-height:150%;
-font-family:"Times New Roman",serif'>&nbsp;</span></p>
-
-<p class=MsoNormal style='line-height:150%'><span lang=vi style='font-size:
-13.0pt;line-height:150%;font-family:"Times New Roman",serif'>&nbsp;</span></p>
-
-<p class=MsoNormal align=center style='text-align:center;text-indent:11.35pt;
-line-height:150%'><span lang=vi style='font-size:13.0pt;line-height:150%;
-font-family:"Times New Roman",serif'>&nbsp;</span></p>
-
-<p class=MsoNormal align=center style='text-align:center;text-indent:11.35pt;
-line-height:150%'><span lang=vi style='font-size:13.0pt;line-height:150%;
-font-family:"Times New Roman",serif'>&nbsp;</span></p>
-
+<h3 style='margin:0in;text-indent:11.35pt;line-height:150%'><b><span
+style='font-size:13.0pt;line-height:150%;font-family:"Times New Roman",serif;
+'></span></b><b><span lang=vi style='font-size:13.0pt;line-height:
+150%;font-family:"Times New Roman",serif;'>Thiết kế thêm một app Nodejs sử dung Electron để đọc đầu ra từ serial và hiển thị lên map</span></b></h3>
 <p class=MsoNormal style='text-indent:11.35pt;line-height:150%'><span lang=vi
 style='font-size:13.0pt;line-height:150%;font-family:"Times New Roman",serif;
-color:#4F4E4E'>&nbsp;</span></p>
+color:#4F4E4E'><img src="img/Screenshot 2025-07-27 113626.png" alt="nodejs app" width="100%"/></span><span lang=vi style='font-size:
+13.0pt;line-height:150%;font-family:"Times New Roman",serif;color:#4F4E4E'> </span></p>
 
-<p class=MsoNormal style='text-indent:11.35pt;line-height:150%'><span lang=vi
-style='font-size:13.0pt;line-height:150%;font-family:"Times New Roman",serif'>&nbsp;</span></p>
+<h3 style='margin:0in;text-indent:11.35pt;line-height:150%'><b><span
+style='font-size:13.0pt;line-height:150%;font-family:"Times New Roman",serif;
+'></span></b><b><span lang=vi style='font-size:13.0pt;line-height:
+150%;font-family:"Times New Roman",serif;'>Sửa đổi code in ra Serial của arduino</span></b></h3>
+
+```cpp
+// --- UPDATED: This function now sends the full victim data packet ---
+void sendVictimDataToNodeApp() {
+  if (victimDataPacket.latitude != 0.0) {
+    // New Format: "GPS_DATA:lat,lng,sos_state,fall_state|"
+    String appData = "GPS_DATA:";
+    appData += String(victimDataPacket.latitude, 6);
+    appData += ",";
+    appData += String(victimDataPacket.longitude, 6);
+    appData += ",";
+    appData += victimDataPacket.isSosSignal ? "1" : "0";
+    appData += ",";
+    appData += victimDataPacket.isFallDetected ? "1" : "0";
+    appData += "|";
+    
+    // Send the raw string using print(), not println()
+    Serial.print(appData);
+    Serial.flush();
+  }
+}
+```
+
+<h3 style='margin:0in;text-indent:11.35pt;line-height:150%'><b><span
+style='font-size:13.0pt;line-height:150%;font-family:"Times New Roman",serif;
+'></span></b><b><span lang=vi style='font-size:13.0pt;line-height:
+150%;font-family:"Times New Roman",serif;'>Đầu ra sẽ có dạng:</span></b></h3>
+
+```
+---
+
+23:31:24.586 USB device detected
+23:32:26.773 Connected to CDC device
+23:32:26.774 �^K"Receiver V11 (App Compatible Mode) Initialized
+23:32:30.035
+21.480000,108.380000,0,0|21.480000,555.380000,0,0|
+21.480015,108.380035,0,0|21.480015,555.380035,0,0|
+21.480031,108.380072,0,0|21.480031,555.380072,0,0|
+21.480048,108.380111,0,0|21.480048,555.380111,0,0|
+23:32:53.932 Disconnected
+
+---
+```
 
 <h3><strong><u><span lang=vi style=''>III. TH&#7920;C NGHI&#7878;M
 VÀ MÔ PH&#7886;NG</span></u></strong></h3>
